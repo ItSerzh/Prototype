@@ -1,5 +1,6 @@
 ﻿using Prototype.Interfaces;
 using Prototype.Model.Components;
+using System.Runtime.CompilerServices;
 
 namespace Prototype.Model;
 
@@ -18,13 +19,15 @@ public class Android(MovingPlatform movingPlatform, string name) : IMyCloneable<
         return $"Androig '{Name}' moves with '{Platform.Name}'";
     }
 
-    public Android DeepClone()
+    public Android MyClone()
     {
-        return  new Android(Platform, Name);
+        return  new (this);
     }
 
     public object Clone()
     {
-        return DeepClone();
+        var clone = MyClone();
+        clone.Platform = new MovingPlatform(Platform.Name);
+        return clone;
     }
 }

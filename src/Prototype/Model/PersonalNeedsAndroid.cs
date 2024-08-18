@@ -9,23 +9,26 @@ namespace Prototype.Model;
 public class PersonalNeedsAndroid(ServingArea servingArea, MovingPlatform movingPlatform, string name) :
     Android(movingPlatform, name)
 {
-    public ServingArea ServingArea { get; set; } = servingArea;
+    public ServingArea Area { get; set; } = servingArea;
 
     protected PersonalNeedsAndroid(PersonalNeedsAndroid origin) : 
-        this(origin.ServingArea, origin.Platform, origin.Name) { }
+        this(origin.Area, origin.Platform, origin.Name) { }
 
     public override string ToString()
     {
-        return string.Join(Environment.NewLine, base.ToString(), $"Can serve in: '{ServingArea.Name}'");
+        return string.Join(Environment.NewLine, base.ToString(), $"Can serve in: '{Area.Name}'");
     }
 
-    public PersonalNeedsAndroid DeepClone()
+    public new PersonalNeedsAndroid MyClone()
     {
         return new (this);
     }
 
-    public object Clone()
+    public new object Clone()
     {
-        return DeepClone();
+        var clone = MyClone();
+        clone.Area = new ServingArea(Area.Name);
+        clone.Platform = new MovingPlatform(Platform.Name);
+        return clone;
     }
 }

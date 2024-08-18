@@ -3,7 +3,7 @@
 /// <summary>
 /// Способ передвижения
 /// </summary>
-public class MovingPlatform
+public class MovingPlatform(string name)
 {
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; } = name;
 }

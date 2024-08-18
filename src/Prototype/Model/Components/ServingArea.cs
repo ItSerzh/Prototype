@@ -3,7 +3,7 @@
 /// <summary>
 /// Область применения, на которую рассчината прошивка
 /// </summary>
-public class ServingArea
+public class ServingArea(string name)
 {
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; } = name;
 }

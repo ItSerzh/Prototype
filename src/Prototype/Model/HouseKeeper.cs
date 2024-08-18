@@ -17,15 +17,18 @@ public class HouseKeeper(string resetKeyword, ServingArea servingArea, MovingPla
     }
 
     protected HouseKeeper(HouseKeeper origin) :
-        this(origin.ResetKeyword, origin.ServingArea, origin.Platform, origin.Name) { } 
+        this(origin.ResetKeyword, origin.Area, origin.Platform, origin.Name) { } 
 
-    public HouseKeeper DeepClone()
+    public new HouseKeeper MyClone()
     {
         return new (this);
     }
 
-    public object Clone()
+    public new object Clone()
     {
-        return DeepClone();
+        var clone = MyClone();
+        clone.Area = new ServingArea(Area.Name);
+        clone.Platform = new MovingPlatform(Platform.Name);
+        return clone;
     }
 }

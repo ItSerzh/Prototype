@@ -2,5 +2,5 @@
 
 public interface IMyCloneable<T>
 {
-    T DeepClone();
+    T MyClone();
 }
