@@ -6,19 +6,12 @@ namespace Prototype.Model;
 /// <summary>
 /// Человекоподобный робот
 /// </summary>
-internal class Android : IMyCloneable<Android>, ICloneable
+public class Android(MovingPlatform movingPlatform, string name) : IMyCloneable<Android>, ICloneable
 {
-    public MovingPlatform Platform { get; set; } = new MovingPlatform();
-    public string Name { get; set; } = string.Empty;
+    public MovingPlatform Platform { get; set; } = movingPlatform;
+    public string Name { get; set; } = name;
 
-    public Android() { }
-
-    public Android(Android origin) : this()
-    {
-        Platform = origin.Platform;
-        Name = origin.Name;
-    }
-
+    public Android(Android origin) : this(origin.Platform, origin.Name) { }
     
     public override string ToString()
     {
@@ -27,10 +20,7 @@ internal class Android : IMyCloneable<Android>, ICloneable
 
     public Android DeepClone()
     {
-        var clone = new Android();
-        clone.Platform = Platform;
-        clone.Name = Name;
-        return clone ;
+        return  new Android(Platform, Name);
     }
 
     public object Clone()

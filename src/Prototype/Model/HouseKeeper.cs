@@ -1,37 +1,28 @@
 ﻿using Prototype.Interfaces;
-using System.Runtime.CompilerServices;
-
-[assembly: InternalsVisibleTo("Prototype.Tests")]
+using Prototype.Model.Components;
 
 namespace Prototype.Model;
 
 /// <summary>
 /// Вид роботов для помощи в домашнем хозяйстве
 /// </summary>
-internal class HouseKeeper : PersonalNeedsAndroid, IMyCloneable<HouseKeeper>, ICloneable
+public class HouseKeeper(string resetKeyword, ServingArea servingArea, MovingPlatform movingPlatform, string name) :
+    PersonalNeedsAndroid(servingArea, movingPlatform, name),
+    IMyCloneable<HouseKeeper>, ICloneable
 {
-    public string ResetKeyword { get; set; }
-
+    public string ResetKeyword { get; set; } = resetKeyword;
 
     public override string ToString()
     {
         return string.Join(Environment.NewLine, base.ToString(), $"Reset keyword: '{ResetKeyword}'");
     }
 
-    public HouseKeeper() { }
-
-    public HouseKeeper(HouseKeeper origin) :
-        base(origin)
-    {
-        ResetKeyword = origin.ResetKeyword;
-    }
+    protected HouseKeeper(HouseKeeper origin) :
+        this(origin.ResetKeyword, origin.ServingArea, origin.Platform, origin.Name) { } 
 
     public HouseKeeper DeepClone()
     {
-        var hk = new HouseKeeper();
-        hk.ResetKeyword = ResetKeyword;
-        base.ServingArea = ServingArea;
-        return hk;
+        return new (this);
     }
 
     public object Clone()

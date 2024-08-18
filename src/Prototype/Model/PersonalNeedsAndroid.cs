@@ -6,27 +6,22 @@ namespace Prototype.Model;
 /// <summary>
 /// Робот для частного использования
 /// </summary>
-internal class PersonalNeedsAndroid : Android, IMyCloneable<PersonalNeedsAndroid>, ICloneable
+public class PersonalNeedsAndroid(ServingArea servingArea, MovingPlatform movingPlatform, string name) :
+    Android(movingPlatform, name), IMyCloneable<PersonalNeedsAndroid>, ICloneable
 {
-    public ServingArea ServingArea { get; set; } = new ServingArea();
-    public PersonalNeedsAndroid() : base() { }
+    public ServingArea ServingArea { get; set; } = servingArea;
 
-    public PersonalNeedsAndroid(PersonalNeedsAndroid origin) : base(origin)
-
-    {
-        ServingArea = origin.ServingArea;
-    }
+    protected PersonalNeedsAndroid(PersonalNeedsAndroid origin) : 
+        this(origin.ServingArea, origin.Platform, origin.Name) { }
 
     public override string ToString()
     {
-        return string.Join(Environment.NewLine, base.ToString(), $"Can serve in:  '{ServingArea.Name}'");
+        return string.Join(Environment.NewLine, base.ToString(), $"Can serve in: '{ServingArea.Name}'");
     }
 
     public PersonalNeedsAndroid DeepClone()
     {
-        var pna = new PersonalNeedsAndroid();
-        pna.ServingArea = ServingArea;
-        return pna;
+        return new (this);
     }
 
     public object Clone()

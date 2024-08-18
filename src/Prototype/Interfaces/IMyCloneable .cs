@@ -1,6 +1,6 @@
 ﻿namespace Prototype.Interfaces;
 
-internal interface IMyCloneable<T>
+public interface IMyCloneable<T>
 {
     T DeepClone();
 }
