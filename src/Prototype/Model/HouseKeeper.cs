@@ -7,8 +7,7 @@ namespace Prototype.Model;
 /// Вид роботов для помощи в домашнем хозяйстве
 /// </summary>
 public class HouseKeeper(string resetKeyword, ServingArea servingArea, MovingPlatform movingPlatform, string name) :
-    PersonalNeedsAndroid(servingArea, movingPlatform, name),
-    IMyCloneable<HouseKeeper>, ICloneable
+    PersonalNeedsAndroid(servingArea, movingPlatform, name)
 {
     public string ResetKeyword { get; set; } = resetKeyword;
 

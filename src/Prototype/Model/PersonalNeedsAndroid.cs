@@ -7,7 +7,7 @@ namespace Prototype.Model;
 /// Робот для частного использования
 /// </summary>
 public class PersonalNeedsAndroid(ServingArea servingArea, MovingPlatform movingPlatform, string name) :
-    Android(movingPlatform, name), IMyCloneable<PersonalNeedsAndroid>, ICloneable
+    Android(movingPlatform, name)
 {
     public ServingArea ServingArea { get; set; } = servingArea;
 
