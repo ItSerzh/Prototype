@@ -24,6 +24,10 @@ public class Android(MovingPlatform movingPlatform, string name) : IMyCloneable<
         return  new (this);
     }
 
+    /// <summary>
+    /// Реализуем полный клон объекта
+    /// </summary>
+    /// <returns></returns>
     public object Clone()
     {
         var clone = MyClone();
