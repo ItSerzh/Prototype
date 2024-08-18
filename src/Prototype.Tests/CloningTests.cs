@@ -14,22 +14,28 @@ namespace Prototype.Tests
         [SetUp]
         public void Setup()
         {
-            androidSusan = new HouseKeeper()
-            {
-                Name = "Susan",
-                Platform = new MovingPlatform() { Name = "Weels" },
-                ServingArea = new ServingArea() { Name = "Outdoor activity" },
-                ResetKeyword = "resetSusan"
-            };
+            androidSusan = new HouseKeeper(
+                resetKeyword: "resetSusan",
+                servingArea: new ServingArea("Outdoor activity") ,
+                movingPlatform: new MovingPlatform("Weels"),
+                name: "Susan");
         }
 
         [Test]
         public void ConstructorCopyTest()
         {
-            var anddroidMary = new HouseKeeper(androidSusan);
+            var anddroidMary = androidSusan.MyClone();
+
+            //check that properties are copied 
+            Assert.IsTrue(anddroidMary.Name == androidSusan.Name);
+            Assert.IsTrue(anddroidMary.ResetKeyword == androidSusan.ResetKeyword);
+            Assert.IsTrue(anddroidMary.Area.Name == androidSusan.Area.Name);
+            Assert.IsTrue(anddroidMary.Platform.Name == androidSusan.Platform.Name);
+
+
             anddroidMary.Name = "Mary";
             anddroidMary.Platform.Name = "Feet";
-            anddroidMary.ServingArea.Name = "Indoor activity";
+            anddroidMary.Area.Name = "Indoor activity";
             anddroidMary.ResetKeyword = "resetMary";
 
             //check that value type are copied 
@@ -37,17 +43,25 @@ namespace Prototype.Tests
             Assert.IsTrue(anddroidMary.ResetKeyword != androidSusan.ResetKeyword);
 
             //check that reference types are the same
-            Assert.IsFalse(anddroidMary.ServingArea.Name != androidSusan.ServingArea.Name);
+            Assert.IsFalse(anddroidMary.Area.Name != androidSusan.Area.Name);
             Assert.IsFalse(anddroidMary.Platform.Name != androidSusan.Platform.Name);
         }
 
         [Test] 
         public void DeepCloneTest()
         {
-            var anddroidMary = androidSusan.DeepClone();
+            var anddroidMary = (HouseKeeper)androidSusan.Clone();
+
+            //check that properties are copied 
+            Assert.IsTrue(anddroidMary.Name == androidSusan.Name);
+            Assert.IsTrue(anddroidMary.ResetKeyword == androidSusan.ResetKeyword);
+            Assert.IsTrue(anddroidMary.Area.Name == androidSusan.Area.Name);
+            Assert.IsTrue(anddroidMary.Platform.Name == androidSusan.Platform.Name);
+
+
             anddroidMary.Name = "Mary";
             anddroidMary.Platform.Name = "Feet";
-            anddroidMary.ServingArea.Name = "Indoor activity";
+            anddroidMary.Area.Name = "Indoor activity";
             anddroidMary.ResetKeyword = "resetMary";
 
             //check that value type are copied 
@@ -55,7 +69,7 @@ namespace Prototype.Tests
             Assert.IsTrue(anddroidMary.ResetKeyword != androidSusan.ResetKeyword);
 
             //check that reference types also copied
-            Assert.IsTrue(anddroidMary.ServingArea.Name != androidSusan.ServingArea.Name);
+            Assert.IsTrue(anddroidMary.Area.Name != androidSusan.Area.Name);
             Assert.IsTrue(anddroidMary.Platform.Name != androidSusan.Platform.Name);
         }
     }
